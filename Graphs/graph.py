@@ -1,4 +1,4 @@
-from random import randint as rint, uniform as rfloat
+from random import randint as rint
 
 
 class Graph():
@@ -17,7 +17,11 @@ class Graph():
                 while v == u or v in _adjacent_list[u]:
                     u = rint(0, v_n-1)
                     v = rint(0, v_n-1)
-                (_adjacent_list[u])[v] = rint(-5, 15)  # вес ребра
+                is_negative = rint(1, 10) // 11
+                if is_negative:
+                    (_adjacent_list[u])[v] = rint(-10, -1)  # вес ребра
+                else:
+                    (_adjacent_list[u])[v] = rint(0, 100)  # вес ребра
 
             self.vertices_number = v_n
             self.edges_number = e_n
@@ -57,10 +61,10 @@ class Graph():
         Добавляет вершину, 
         Возвращает её индекс в графе
         '''
-        self.vertices_number += 1
         self.adjacent_list.append({self.vertices_number: 0})
         self.adjacent_matrix = self._make_matrix_from_list(self.adjacent_list)
-        return self.vertices_number
+        self.vertices_number += 1
+        return self.vertices_number - 1
 
     def add_edge(self, u, v, w, is_change=False) -> bool:
         if not is_change:
@@ -68,17 +72,23 @@ class Graph():
                 return False
             self.edges_number += 1
         else:
-            curr_w = self.adjacent_matrix[u][v]
-            self.edges.remove((u, v, curr_w))
+            cur_w = self.adjacent_matrix[u][v]
+            self.edges.remove((u, v, cur_w))
         self.edges.append((u, v, w))
         self.adjacent_list[u][v] = w
         self.adjacent_matrix[u][v] = w
 
     def get_edges(self):
-        return self.edges
+        return self.edges[:]
 
     def get_adjacent_list(self):
-        return self.adjacent_list
+        return self.adjacent_list[:]
 
     def get_adjacent_matrix(self):
-        return self.adjacent_matrix
+        return self.adjacent_matrix[:]
+
+    def show(self):
+        print('Graph:\n[')
+        for line in self.adjacent_matrix:
+            print('\t', line, ',')
+        print(']')
