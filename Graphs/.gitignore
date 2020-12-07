@@ -1,5 +1,0 @@
-$ cat .gitignore
-
-/.ipynb_checkpoints
-/.vscode
-/__pycache__
