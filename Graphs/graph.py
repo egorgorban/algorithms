@@ -9,6 +9,9 @@ class Graph():
                 v_n = rint(5, 10)
             if not e_n > 0:
                 e_n = rint(int(v_n*(v_n-1)/6), int(v_n*(v_n-1)/2))
+                
+            if e_n > v_n*(v_n-1):
+                e_n = v_n*(v_n-1)
 
             _adjacent_list = [{i: 0} for i in range(v_n)]
             for _ in range(e_n):
